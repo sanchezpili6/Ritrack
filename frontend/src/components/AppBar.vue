@@ -1,39 +1,52 @@
 <template>
   <v-app-bar
-      color="teal-darken-4"
-      image="https://picsum.photos/1920/1080?random"
+      color="#D46626"
+      hide-on-scroll
   >
-    <template v-slot:image>
-      <v-img
-          gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)"
-      ></v-img>
-    </template>
+    <v-spacer></v-spacer>
 
-    <template v-slot:prepend>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-    </template>
+    <v-btn icon v-show="!login" to="/lost">
+      <h2>Lost Pets</h2>
+    </v-btn>
 
-    <v-app-bar-title>Title</v-app-bar-title>
+    <v-btn icon v-show="login" to="/">
+      <h2>About Us</h2>
+    </v-btn>
 
     <v-spacer></v-spacer>
 
-    <v-btn icon>
-      <v-icon>mdi-magnify</v-icon>
+    <v-btn icon v-show="!login" to="/found">
+      <h2>Found Pets</h2>
+    </v-btn>
+    <v-btn icon v-show="login" to="/signup">
+      <h2>Sign up</h2>
     </v-btn>
 
-    <v-btn icon>
-      <v-icon>mdi-heart</v-icon>
+    <v-spacer></v-spacer>
+
+    <v-btn icon v-show="!login" to="/my-pets">
+      <h2>My Pets</h2>
+    </v-btn>
+    <v-btn icon v-show="login" to="/login">
+      <h2>Login</h2>
     </v-btn>
 
-    <v-btn icon>
-      <v-icon>mdi-dots-vertical</v-icon>
+    <v-spacer></v-spacer>
+
+    <v-btn icon v-show="!login" to="/profile">
+      <h2>Profile</h2>
     </v-btn>
+
+    <v-spacer v-show="!login"></v-spacer>
   </v-app-bar>
 </template>
 
 <script>
 export default {
-  name: "AppBar.vue"
+  name: "AppBar.vue",
+  props:{
+    login: Boolean
+  }
 }
 </script>
 
