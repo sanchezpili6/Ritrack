@@ -12,7 +12,7 @@
         </v-card-text>
         <v-card-actions class="options">
           <v-btn color="#D46626" to="/login">I already have an account</v-btn>
-          <v-btn color="#FFA625">Sign Up</v-btn>
+          <v-btn color="#FFA625" to="/lost">Sign Up</v-btn>
         </v-card-actions>
       </v-card>
     </div>
