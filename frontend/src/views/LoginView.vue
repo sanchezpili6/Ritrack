@@ -15,7 +15,7 @@
         <v-card-actions class="options">
           <v-btn color="#D46626" to="/signup">I don't have an account</v-btn>
           <div></div>
-          <v-btn color="#FFA625">Continue</v-btn>
+          <v-btn color="#FFA625" to="/lost">Continue</v-btn>
         </v-card-actions>
       </v-card>
     </div>

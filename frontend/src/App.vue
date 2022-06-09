@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -31,5 +31,6 @@ nav {
       color: #42b983;
     }
   }
+
 }
 </style>
