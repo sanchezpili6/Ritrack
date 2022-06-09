@@ -1,33 +1,33 @@
 <template>
   <div>
     <AppBar></AppBar>
-    <h1>Lost Pets</h1>
-      <v-container id="filters">
-        <v-text-field label="Pet name" v-model="petName" outlined></v-text-field>
-        <v-combobox
-            v-model="characteristics"
-            chips
-            clearable
-            label="Your pet's characteristics"
-            multiple
-            solo
-            outlined
-        >
-          <template v-slot:selection="{ attrs, item, select, selected }">
-            <v-chip
-                v-bind="attrs"
-                :input-value="selected"
-                close
-                @click="select"
-                @click:close="remove(item)"
-            >
-              <strong>{{ item }}</strong>&nbsp;
-            </v-chip>
-          </template>
-        </v-combobox>
-        <v-btn color="#FFA625"><v-icon>mdi-magnify</v-icon>Look for pet</v-btn>
-      </v-container>
-      <v-row class="mx-2">
+    <h1>Found Pets</h1>
+    <v-container id="filters">
+      <v-text-field label="Pet name" v-model="petName" outlined></v-text-field>
+      <v-combobox
+          v-model="characteristics"
+          chips
+          clearable
+          label="Your pet's characteristics"
+          multiple
+          solo
+          outlined
+      >
+        <template v-slot:selection="{ attrs, item, select, selected }">
+          <v-chip
+              v-bind="attrs"
+              :input-value="selected"
+              close
+              @click="select"
+              @click:close="remove(item)"
+          >
+            <strong>{{ item }}</strong>&nbsp;
+          </v-chip>
+        </template>
+      </v-combobox>
+      <v-btn color="#FFA625"><v-icon>mdi-magnify</v-icon>Look for pet</v-btn>
+    </v-container>
+    <v-row class="mx-2">
       <v-col
           v-for="n in 9"
           :key="n"
@@ -80,7 +80,7 @@
 <script>
 import AppBar from "@/components/AppBar";
 export default {
-  name: "Lost&FoundView.vue",
+  name: "FoundView.vue",
   components:{
     AppBar
   },
@@ -99,4 +99,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

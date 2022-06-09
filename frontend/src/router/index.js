@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from "@/views/LoginView";
 import SignUpView from "@/views/SignUpView";
 import LostView from "@/views/LostView";
+import FoundView from "@/views/FoundView";
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/lost',
     name: 'lost',
     component: LostView
+  },
+  {
+    path: '/found',
+    name: 'found',
+    component: FoundView
   }
 ]
 
