@@ -3,19 +3,16 @@
     <AppBar login></AppBar>
     <div class="main">
       <v-card width="800px" height="400px" class="card" >
-        <v-card-title class="justify-center">
-          <v-spacer></v-spacer>
-          LOGIN
-          <v-spacer></v-spacer>
-        </v-card-title>
+        <v-card-title class="options">SIGN UP</v-card-title>
         <v-card-text>
+          <v-text-field label="Name" outlined dense></v-text-field>
           <v-text-field label="User Name" outlined dense></v-text-field>
           <v-text-field label="Password" outlined dense></v-text-field>
+          <v-text-field label="Email" outlined dense></v-text-field>
         </v-card-text>
         <v-card-actions class="options">
-          <v-btn color="#D46626" to="/signup">I don't have an account</v-btn>
-          <div></div>
-          <v-btn color="#FFA625">Continue</v-btn>
+          <v-btn color="#D46626" to="/login">I already have an account</v-btn>
+          <v-btn color="#FFA625">Sign Up</v-btn>
         </v-card-actions>
       </v-card>
     </div>
@@ -25,7 +22,7 @@
 <script>
 import AppBar from "@/components/AppBar";
 export default {
-  name: "LoginView.vue",
+  name: "SignUpView.vue",
   components:{
     AppBar
   }
