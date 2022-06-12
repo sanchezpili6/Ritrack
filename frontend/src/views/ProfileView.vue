@@ -27,7 +27,7 @@
               v-for="pet in pets"
               :key="pet"
               class="mx-auto my-8"
-              max-width="344"
+              width="344"
           >
             <v-img
                 :src="pet.img"
