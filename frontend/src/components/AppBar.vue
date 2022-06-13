@@ -38,6 +38,12 @@
     </v-btn>
 
     <v-spacer v-show="!login"></v-spacer>
+
+    <v-btn icon v-show="!login" to="/">
+      <h2>Log out</h2>
+    </v-btn>
+
+    <v-spacer v-show="!login"></v-spacer>
   </v-app-bar>
 </template>
 

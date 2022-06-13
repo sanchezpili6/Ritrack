@@ -6,6 +6,7 @@ import SignUpView from "@/views/SignUpView";
 import LostView from "@/views/LostView";
 import FoundView from "@/views/FoundView";
 import ProfileView from "@/views/ProfileView";
+import MyPetsView from "@/views/MyPetsView";
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView
+  },
+  {
+    path: '/my-pets',
+    name: 'my pets',
+    component: MyPetsView
   }
 ]
 

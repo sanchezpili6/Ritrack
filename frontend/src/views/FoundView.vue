@@ -66,9 +66,9 @@
             <v-btn
                 color="#D46626"
                 text
-                @click="reserve"
+                @click="view"
             >
-              See pet
+              View pet
             </v-btn>
           </v-card-actions>
         </v-card>
