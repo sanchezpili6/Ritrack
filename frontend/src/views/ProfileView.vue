@@ -30,7 +30,7 @@
               width="344"
           >
             <v-img
-                :src="pet.img"
+                src="https://www.lifespan.org/sites/default/files/styles/featured_image_large/public/lifespan-files/images/blog-images/health-beneiftis-of-pets-900x600.jpg?h=b69e0e0e&itok=PFpteD0N"
                 height="200px"
             ></v-img>
 
@@ -61,7 +61,7 @@
                 <v-divider></v-divider>
 
                 <v-card-text>
-                  {{pet.description}}
+                  {{pet.location}}
                 </v-card-text>
               </div>
             </v-expand-transition>
@@ -75,6 +75,7 @@
 <script>
 import AppBar from "@/components/AppBar";
 import {get_user} from "@/helpers/Services";
+import {get_pet} from "@/helpers/Services";
 export default {
   name: "ProfileView.vue",
   components:{
@@ -85,40 +86,29 @@ export default {
       this.email = localStorage.email
     }
     this.getUser()
-    console.log(this.mailto)
   },
   data(){
     return{
       mailto: `mailto:${localStorage.email}?Subject=I%20may%20have%20found%20your%20pet`,
       email: '',
       user: {},
-      pets:[
-        {
-          'img':'https://www.lifespan.org/sites/default/files/styles/featured_image_large/public/lifespan-files/images/blog-images/health-beneiftis-of-pets-900x600.jpg?h=b69e0e0e&itok=PFpteD0N',
-          'name': 'Firulais',
-          'status': 'At home',
-          'description':"I'm a good boy"
-        },
-        {
-          'img':'https://www.lifespan.org/sites/default/files/styles/featured_image_large/public/lifespan-files/images/blog-images/health-beneiftis-of-pets-900x600.jpg?h=b69e0e0e&itok=PFpteD0N',
-          'name': 'Firulais',
-          'status': 'At home',
-          'description':"I'm a good boy"
-        },
-        {
-          'img':'https://www.lifespan.org/sites/default/files/styles/featured_image_large/public/lifespan-files/images/blog-images/health-beneiftis-of-pets-900x600.jpg?h=b69e0e0e&itok=PFpteD0N',
-          'name': 'Firulais',
-          'status': 'At home',
-          'description':"I'm a good boy"
-        },
-      ],
+      pets:[],
       show: false,
     }
   },
   methods:{
     async getUser(){
       this.user = await get_user(this.email)
-      console.log(this.user)
+      this.pets = await this.getPet()
+      console.log(this.pets)
+    },
+    async getPet(){
+      let pets_arr = []
+      for(let pet = 0; pet < this.user['pets'].length ; pet ++){
+        pet = await get_pet(this.user['pets'][pet])
+        pets_arr.push(pet)
+      }
+      return pets_arr
     }
   }
 }

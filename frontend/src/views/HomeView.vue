@@ -10,7 +10,7 @@
       <div class="cards">
         <v-card
               v-for="card in cards" :key="card"
-              class="mx-auto"
+              class="mx-auto my-2"
               max-width="344"
           >
             <v-img
@@ -95,8 +95,11 @@ export default {
 </script>
 
 <style>
-  .cards{
-    display: flex;
-    justify-content: space-evenly;
-  }
+.cards{
+  display: flex;
+  justify-content: space-evenly;
+  align-content: space-evenly;
+  margin: 50px;
+  flex-wrap: wrap;
+}
 </style>
