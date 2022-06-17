@@ -39,7 +39,7 @@
 
     <v-spacer v-show="!login"></v-spacer>
 
-    <v-btn icon v-show="!login" to="/">
+    <v-btn icon v-show="!login" @click="logout">
       <h2>Log out</h2>
     </v-btn>
 
@@ -48,10 +48,27 @@
 </template>
 
 <script>
+import {logout} from "@/helpers/Services";
 export default {
   name: "AppBar.vue",
   props:{
     login: Boolean
+  },
+  mounted() {
+    if(localStorage.email){
+      this.email = localStorage.email
+    }
+  },
+  data:()=>{
+    return{
+      email: ''
+    }
+  },
+  methods:{
+    async logout(){
+      const data = {"email": this.email}
+      await logout(data).then(this.$router.replace('/'))
+    }
   }
 }
 </script>
