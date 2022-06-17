@@ -29,23 +29,21 @@ def get_user(email):
 
 @main_blueprint.route('/add_user', methods=['POST'])
 def add_user():
-    email = request.form['email']
-    password = request.form['password']
-    name = request.form['name']
-    pets = request.form['pets'].strip('[]').split(',')
-    location = request.form['location']
-    try:
-        db.Users.insert_one({
-            "name": name,
-            "email": email,
-            "password": password,
-            "pets": pets,
-            "location": location,
-            "is_logged_in": True
-        })
-        return {"success": True}
-    except DuplicateKeyError:
-        return {"error": "A user with the given email already exists."}
+    content = request.get_json()
+    name = content.get('name')
+    email = content.get('email')
+    password = content.get('password')
+    pets = []
+    location = ''
+    db.Users.insert_one({
+        "name": name,
+        "email": email,
+        "password": password,
+        "pets": pets,
+        "location": location,
+        "is_logged_in": True
+    })
+    return {"success": True}
 
 
 @main_blueprint.route('/login', methods=['POST'])
