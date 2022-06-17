@@ -28,6 +28,14 @@ const edit_pet = async (data) => {
     const response = await Apis.put(`/edit_pet`, data);
     return response.data;
 }
+const add_found_pet = async (data) => {
+    const response = await Apis.post(`/add_found_pet`, data);
+    return response.data;
+}
+const get_found_pets = async () => {
+    const response = await Apis.get(`/get_found_pets`);
+    return response.data;
+}
 
 export {
     get_user,
@@ -36,5 +44,7 @@ export {
     logout,
     get_pet,
     add_pet,
-    edit_pet
+    edit_pet,
+    add_found_pet,
+    get_found_pets
 }

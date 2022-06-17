@@ -44,7 +44,10 @@ export default {
   methods:{
     async login(){
       const data = {"email": this.email, "password": this.password}
-      await login(data).then(this.$router.replace('/lost'))
+      const response = await login(data)
+      if(response == 'success'){
+        this.$router.push("/lost");
+      }
     }
   }
 }

@@ -58,7 +58,7 @@ def login():
                 {"email": email},
                 {"$set": {"is_logged_in": True}}
             )
-            return {'success': user['password'] == password}
+            return 'success'
         except Exception as e:
             print(e)
             return {'error': 'error logging in'}
@@ -81,7 +81,7 @@ def logout():
 
 @main_blueprint.route('/get_pet/<id>', methods=['GET'])
 def get_pet(id):
-    pet = db.Pets.find_one({}, {"_id": id, "name": 1, "characteristics": 1, "status": 1, "human": 1})
+    pet = db.Pets.find_one({}, {"_id": id, "name": 1, "characteristics": 1, "status": 1, "human": 1, "location": 1})
     print('pet:')
     print(pet)
     return parse_json(pet)
@@ -89,20 +89,28 @@ def get_pet(id):
 
 @main_blueprint.route('/add_pet', methods=['POST'])
 def add_pet():
-    name = request.form['name']
-    characteristics = request.form['characteristics'].strip('[]').split(',')
-    status = request.form['status']
-    human = request.form['human']
-    try:
-        db.Pets.insert_one({
-            "name": name,
-            "characteristics": characteristics,
-            "status": status,
-            "human": human
-        })
-        return {"success": True}
-    except DuplicateKeyError:
-        return {"error": "A pet with the given email already exists."}
+    content = request.get_json()
+    name = content.get('name')
+    characteristics = content.get('characteristics')
+    status = content.get('status')
+    human = content.get('human')
+    location = content.get('location')
+    _id = db.Pets.insert_one({
+        "name": name,
+        "characteristics": characteristics,
+        "status": status,
+        "human": human,
+        "location": location
+    })
+    db.Users.update_one(
+        {"_id": ObjectId(human)},
+        {"$push": {"pets": _id.inserted_id}}
+    )
+    print('just id')
+    print(_id)
+    print('_id.inserted_id')
+    print(_id.inserted_id)
+    return {"success": True}
 
 
 @main_blueprint.route('/edit_pet', methods=['PUT'])
@@ -120,3 +128,35 @@ def edit_pet():
         return {'success': True}
     except:
         return {'error': 'error editing pet'}
+
+
+@main_blueprint.route('/get_lost_pets', methods=['GET'])
+def get_lost_pets():
+    pets = db.get_collection('Pets').find({"status": "Lost"})
+    return pets.count()
+
+
+@main_blueprint.route('/get_found_pets', methods=['GET'])
+def get_found_pets():
+    pets = db.Pets.find({"status": "Found"})
+    return parse_json(pets)
+
+
+@main_blueprint.route('/add_found_pet', methods=['POST'])
+def add_found_pet():
+    content = request.get_json()
+    name = content.get('name')
+    email = content.get('email')
+    characteristics = content.get('characteristics')
+    status = 'Found'
+    human = 'unknown'
+    location = content.get('location')
+    db.Pets.insert_one({
+        "name": name,
+        "characteristics": characteristics,
+        "status": status,
+        "human": human,
+        "email": email,
+        "location": location
+    })
+    return {"success": True}

@@ -22,7 +22,7 @@
             {{ pet.status }}
           </h3>
           <v-spacer></v-spacer>
-          <v-btn color="#D46626" dark @click="editPetModal = !editPetModal">
+          <v-btn color="#D46626" dark @click="editPet(pet._id)">
             Edit pet
           </v-btn>
 
@@ -65,6 +65,7 @@ export default {
       pets:[],
       addPetModal: false,
       editPetModal: false,
+      petToEdit: ''
     }
   },
   methods:{
@@ -80,6 +81,10 @@ export default {
         pets_arr.push(pet)
       }
       return pets_arr
+    },
+    editPet(id){
+      this.petToEdit = id
+      this.editPetModal = true
     }
   }
 }
