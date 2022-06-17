@@ -15,11 +15,11 @@
               >
             </v-avatar>
             <p class="ml-3">
-              John Doe
+              {{user.name}}
             </p>
           </v-card-title>
           <v-card-actions class="buttons">
-            <v-btn x-large>Send email<v-icon right>mdi-email-fast</v-icon></v-btn>
+            <v-btn x-large :href="mailto">Send email<v-icon right>mdi-email-fast</v-icon></v-btn>
           </v-card-actions>
         </v-img>
         <div class="pets-card">
@@ -74,13 +74,24 @@
 
 <script>
 import AppBar from "@/components/AppBar";
+import {get_user} from "@/helpers/Services";
 export default {
   name: "ProfileView.vue",
   components:{
     AppBar
   },
+  mounted() {
+    if(localStorage.email){
+      this.email = localStorage.email
+    }
+    this.getUser()
+    console.log(this.mailto)
+  },
   data(){
     return{
+      mailto: `mailto:${localStorage.email}?Subject=I%20may%20have%20found%20your%20pet`,
+      email: '',
+      user: {},
       pets:[
         {
           'img':'https://www.lifespan.org/sites/default/files/styles/featured_image_large/public/lifespan-files/images/blog-images/health-beneiftis-of-pets-900x600.jpg?h=b69e0e0e&itok=PFpteD0N',
@@ -102,6 +113,12 @@ export default {
         },
       ],
       show: false,
+    }
+  },
+  methods:{
+    async getUser(){
+      this.user = await get_user(this.email)
+      console.log(this.user)
     }
   }
 }
