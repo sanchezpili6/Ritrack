@@ -5,7 +5,7 @@ import json
 
 import pymongo
 
-uri = 'mongodb+srv://pili:W5jk9cHJ!@ritrack.kesgjqz.mongodb.net/test'
+uri = ''
 client = pymongo.MongoClient(uri)
 db = client.Ritrack
 
@@ -48,8 +48,9 @@ def add_user():
 
 @main_blueprint.route('/login', methods=['POST'])
 def login():
-    email = request.form['email']
-    password = request.form['password']
+    content = request.get_json()
+    email = content.get('email')
+    password = content.get('password')
     user = get_user(email)
     if user['password'] == password:
         try:
@@ -66,7 +67,8 @@ def login():
 
 @main_blueprint.route('/logout', methods=['POST'])
 def logout():
-    email = request.form['email']
+    content = request.get_json()
+    email = content.get('email')
     try:
         db.Users.update_one(
             {"email": email},

@@ -9,13 +9,13 @@
           <v-spacer></v-spacer>
         </v-card-title>
         <v-card-text>
-          <v-text-field label="User Name" outlined dense></v-text-field>
-          <v-text-field label="Password" outlined dense></v-text-field>
+          <v-text-field v-model="email"  label="E-mail" outlined dense></v-text-field>
+          <v-text-field v-model="password" type="password" label="Password" outlined dense></v-text-field>
         </v-card-text>
         <v-card-actions class="options">
           <v-btn color="#D46626" to="/signup">I don't have an account</v-btn>
           <div></div>
-          <v-btn color="#FFA625" to="/lost">Continue</v-btn>
+          <v-btn color="#FFA625" @click="login">Continue</v-btn>
         </v-card-actions>
       </v-card>
     </div>
@@ -24,10 +24,28 @@
 
 <script>
 import AppBar from "@/components/AppBar";
+import {login} from "@/helpers/Services";
 export default {
   name: "LoginView.vue",
   components:{
     AppBar
+  },
+  watch: {
+    email(newEmail) {
+      localStorage.email = newEmail;
+    }
+  },
+  data:()=>{
+    return{
+      email: '',
+      password: '',
+    }
+  },
+  methods:{
+    async login(){
+      const data = {"email": this.email, "password": this.password}
+      await login(data).then(this.$router.replace('/lost'))
+    }
   }
 }
 </script>
