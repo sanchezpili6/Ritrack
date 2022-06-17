@@ -5,7 +5,7 @@ import json
 
 import pymongo
 
-uri = ''
+uri = 'mongodb+srv://pili:W5jk9cHJ!@ritrack.kesgjqz.mongodb.net/test'
 client = pymongo.MongoClient(uri)
 db = client.Ritrack
 
