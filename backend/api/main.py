@@ -76,3 +76,44 @@ def logout():
         return { 'success': True }
     except:
         return { 'error': 'error logging out' }
+
+
+@main_blueprint.route('/get_pet/id', methods=['GET'])
+def get_pet(id):
+    pet = db.Pets.find_one({ "id": id })
+    return parse_json(pet)
+
+
+@main_blueprint.route('/add_pet', methods=['POST'])
+def add_pet():
+    name = request.form['name']
+    characteristics = request.form['characteristics'].strip('[]').split(',')
+    status = request.form['status']
+    human = request.form['human']
+    try:
+        db.Users.insert_one({
+            "name": name,
+            "characteristics": characteristics,
+            "status": status,
+            "human": human
+        })
+        return { "success": True }
+    except DuplicateKeyError:
+        return {"error": "A pet with the given email already exists."}
+
+
+@main_blueprint.route('/edit_pet', methods=['PUT'])
+def edit_pet():
+    id = request.form['id']
+    data = dict(request.form)
+    if 'characteristics' in data:
+        data['characteristics'] = [char.strip() for char in data['characteristics'].strip('[]').split(',')]
+    try:
+        data.pop('id')
+        db.Pets.update_one(
+            { "_id": ObjectId(id) },
+            { "$set": data }
+        )
+        return { 'success': True }
+    except:
+        return { 'error': 'error logging out' }
