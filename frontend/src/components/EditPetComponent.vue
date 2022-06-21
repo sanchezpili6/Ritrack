@@ -91,9 +91,7 @@ export default {
       this.characteristics = [...this.characteristics]
     },
     async save(){
-      console.log(this.pet_id)
       const data = {"id": this.pet_id, "name": this.petName, "characteristics": this.characteristics, "status": this.status, "human": this.user['_id']['$oid'], "location": this.location}
-      console.log(this.user)
       await edit_pet(data)
     },
     cancel(){

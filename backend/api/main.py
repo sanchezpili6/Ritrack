@@ -81,7 +81,7 @@ def logout():
 
 @main_blueprint.route('/get_pet/<id>', methods=['GET'])
 def get_pet(id):
-    pet = db.Pets.find_one({}, {"_id": id, "name": 1, "characteristics": 1, "status": 1, "human": 1, "location": 1})
+    pet = db.Pets.find_one({}, {"_id": id, "name":True})
     print('pet:')
     print(pet)
     return parse_json(pet)
@@ -113,10 +113,11 @@ def add_pet():
     return {"success": True}
 
 
-@main_blueprint.route('/edit_pet', methods=['PUT'])
+@main_blueprint.route('/edit_pet', methods=['POST'])
 def edit_pet():
-    id = request.form['id']
-    data = dict(request.form)
+    content = request.get_json()
+    id = content['id']
+    data = dict(content)
     if 'characteristics' in data:
         data['characteristics'] = [char.strip() for char in data['characteristics'].strip('[]').split(',')]
     try:
@@ -138,9 +139,13 @@ def get_lost_pets():
 
 @main_blueprint.route('/get_found_pets', methods=['GET'])
 def get_found_pets():
-    pets = db.Pets.find({"status": "Found"})
+    pets = db.Pets.find(
+        filter = {
+            "status": "Found"
+        },
+        allow_partial_results = False
+    )
     return parse_json(pets)
-
 
 @main_blueprint.route('/add_found_pet', methods=['POST'])
 def add_found_pet():

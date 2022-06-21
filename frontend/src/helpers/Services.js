@@ -25,7 +25,7 @@ const add_pet = async (data) => {
     return response.data;
 }
 const edit_pet = async (data) => {
-    const response = await Apis.put(`/edit_pet`, data);
+    const response = await Apis.post(`/edit_pet`, data);
     return response.data;
 }
 const add_found_pet = async (data) => {
