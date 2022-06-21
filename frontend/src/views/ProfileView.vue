@@ -105,9 +105,10 @@ export default {
     async getPet(){
       let pets_arr = []
       for(let pet = 0; pet < this.user['pets'].length ; pet ++){
-        pet = await get_pet(this.user['pets'][pet])
+        pet = await get_pet(this.user['pets'][pet]['$oid'])
         pets_arr.push(pet)
       }
+      console.log(pets_arr)
       return pets_arr
     }
   }

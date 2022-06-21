@@ -8,6 +8,12 @@
           dense
           v-model="petName"
       ></v-text-field>
+      <v-text-field
+          label="Location (or last seen)"
+          outlined
+          dense
+          v-model="location"
+      ></v-text-field>
       <v-combobox
           v-model="characteristics"
           chips
@@ -57,25 +63,39 @@
 </template>
 
 <script>
+import {edit_pet} from "@/helpers/Services";
+
 export default {
   name: "EditPetComponent.vue",
+  mounted() {
+    if(localStorage.email){
+      this.email = localStorage.email
+    }
+    this.getUser()
+  },
+  props:{
+    pet_id: String
+  },
   data:()=>({
+    location: '',
     petName: '',
     characteristics: [],
     chips:['dog', 'brown', 'good boy'],
     status: '',
-    statuses: ['Lost', 'At home']
+    statuses: ['Lost', 'At home'],
+    user: {}
   }),
   methods: {
     remove (item) {
       this.characteristics.splice(this.characteristics.indexOf(item), 1)
       this.characteristics = [...this.characteristics]
     },
-    save(){
-
+    async save(){
+      const data = {"id": this.pet_id, "name": this.petName, "characteristics": this.characteristics, "status": this.status, "human": this.user['_id']['$oid'], "location": this.location}
+      await edit_pet(data)
     },
     cancel(){
-
+      location.reload()
     }
   },
 }

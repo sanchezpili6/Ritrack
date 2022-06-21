@@ -8,6 +8,12 @@
           dense
           v-model="petName"
       ></v-text-field>
+      <v-text-field
+          label="Location (or last seen)"
+          outlined
+          dense
+          v-model="location"
+      ></v-text-field>
       <v-combobox
           v-model="characteristics"
           chips
@@ -57,25 +63,38 @@
 </template>
 
 <script>
+import {add_pet, get_user} from "@/helpers/Services";
 export default {
   name: "AddPetComponent.vue",
+  mounted() {
+    if(localStorage.email){
+      this.email = localStorage.email
+    }
+    this.getUser()
+  },
   data:()=>({
+    location: '',
     petName: '',
     characteristics: [],
     chips:['dog', 'brown', 'good boy'],
     status: '',
-    statuses: ['Lost', 'At home']
+    statuses: ['Lost', 'At home'],
+    user: {}
   }),
   methods: {
     remove (item) {
       this.characteristics.splice(this.characteristics.indexOf(item), 1)
       this.characteristics = [...this.characteristics]
     },
-    save(){
-
+    async getUser(){
+      this.user = await get_user(this.email)
+    },
+    async save(){
+      const data = {"name": this.petName, "characteristics": this.characteristics, "status": this.status, "human": this.user['_id']['$oid'], "location": this.location}
+      await add_pet(data)
     },
     cancel(){
-
+      location.reload()
     }
   },
 }

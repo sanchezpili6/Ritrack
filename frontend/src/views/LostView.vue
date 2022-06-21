@@ -29,15 +29,14 @@
       </v-container>
       <v-row class="mx-2">
       <v-col
-          v-for="n in 9"
-          :key="n"
+          v-for="pet in pets"
+          :key="pet"
           cols="4"
           class="d-flex child-flex"
       >
         <v-card>
           <v-img
-              :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-              :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+              src="https://lh3.googleusercontent.com/pw/AM-JKLXybhoutQ07K-2nNpFN6DEEExJRtZhGEgHv8HERkDcXzRWGcPS4TKTSEA9qKeZi547Ecyjy-RrM0EnS68RY_RVgBFk4T1_OqvfZE6FWHUhdpd8BC0Vco5XztIawAmoG6ESYEvEAkXWeE0Fk4edU4W5Apw=w1236-h927-no?authuser=0"
               aspect-ratio="1"
               class="grey lighten-2"
           >

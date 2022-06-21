@@ -48,7 +48,7 @@ export default {
         "email": this.email,
         "password": this.password
       }
-      await add_user(data).then(this.$router.replace('/lost'))
+      await add_user(data).then(this.$router.replace('/login'))
     }
   }
 }
